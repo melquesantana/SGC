@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="/modelo/modelo.xhtml">
+
+	<ui:define name="conteudo">
+		<h:form id="formListagem">
+			<p:panel header="Usuários - Listagem">
+				<p:dataTable id="tabela" emptyMessage="Nenhum usuario encontrado!"
+					style="text-align: center" paginator="true"
+					value="#{usuarioBean.usuarios}" var="usuario" rows="5">
+
+					<f:facet name="header">
+						<h:commandLink>
+							<p:graphicImage library="imagens" name="pdf.png" width="24"
+								title="Relatório PDF" />
+							<p:dataExporter type="pdf" target="tabela" fileName="usuario"
+								encoding="ISO-8859-1" />
+						</h:commandLink>
+						<h:commandLink>
+							<p:graphicImage library="imagens" name="excel.png" width="24"
+								title="Relatório EXCEL" />
+							<p:dataExporter type="xls" target="tabela" fileName="usuario"
+								encoding="ISO-8859-1" />
+						</h:commandLink>
+					</f:facet>
+
+					<f:facet name="footer">
+						<p:commandButton icon="ui-icon-plus" title="Cadastrar Usuario"
+							oncomplete="PF('dialogo').show();"
+							actionListener="#{usuarioBean.novo}"
+							update=":mensagem :formCadastro:painel">
+							<f:actionListener
+								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						</p:commandButton>
+						 
+
+
+					</f:facet>
+
+					<p:column headerText="Nome" sortBy="#{usuario.pessoa.nome}"
+						filterBy="#{usuario.pessoa.nome}">
+						<h:outputText value="#{usuario.pessoa.nome}" />
+					</p:column>
+
+
+					<p:column headerText="CPF" sortBy="#{usuario.cpf}"
+						filterBy="#{usuario.cpf}">
+						<h:outputText value="#{usuario.cpf}" />
+					</p:column>
+
+
+
+					<p:column headerText="Tipo" sortBy="#{usuario.tipoDeUsuario}">
+						<h:outputText value="#{usuario.tipoDeUsuario}" />
+					</p:column>
+
+
+
+					<p:column headerText="Opções" exportable="false">
+						<p:commandButton icon="ui-icon-trash" title="excluir"
+						
+							actionListener="#{usuarioBean.excluir}"
+							update=":mensagem :formListagem:tabela">
+							<p:confirm header="Confirmação"
+								message="Deseja excluir o usuario?" icon="ui-icon-alert" />
+							<f:attribute name="usuarioSelecionado" value="#{usuario}" />
+
+						</p:commandButton>
+
+						<p:commandButton icon="ui-icon-pencil" title="editar"
+					 
+							actionListener="#{usuarioBean.editar}"
+							update=":mensagem :formCadastro:painel"
+							oncomplete="PF('dialogo').show();">
+							<f:attribute name="usuarioSelecionado" value="#{usuario}" />
+							<f:actionListener
+								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+				<p:confirmDialog global="true">
+					<p:commandButton value="Sim" type="button"
+						styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+					<p:commandButton value="Não" type="button"
+						styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+				</p:confirmDialog>
+			</p:panel>
+		</h:form>
+		<p:dialog header="Usuários - Cadastro (Criar Login de Usúrio)" 
+			widgetVar="dialogo" draggable="false" resizable="false" modal="true"
+			closable="false">
+			<h:form id="formCadastro">
+				<h:panelGrid id="painel" columns="2" layout="grid">
+
+					<p:outputLabel for="pessoa" value="Pessoa:" />
+					<p:selectOneMenu id="pessoa" filter="true"	value="#{usuarioBean.usuario.pessoa}" 
+									
+						converter="omnifaces.SelectItemsConverter" required="true"
+						requiredMessage="O campo 'Pessoa' é obrigatório">
+						<f:selectItem noSelectionOption="true"
+							itemLabel="Selecione uma Pessoa" />
+						<f:selectItems value="#{usuarioBean.pessoas}" var="pessoa"
+							itemValue="#{pessoa}" itemLabel="#{pessoa.nome}" />
+					</p:selectOneMenu>
+					
+					<p:outputLabel for="cpf" value="CPF:" />
+					<p:inputMask id="cpf" mask="999.999.999-99" size="15"
+						value="#{usuarioBean.usuario.cpf}" required="true"
+						requiredMessage="O campo 'CPF' é obrigatório" />
+
+
+
+
+					<p:outputLabel value="Senha" for="senha" />
+					<p:password id="senha" maxlength="16" size="25" required="true"
+						requiredMessage="o campo senha é obrigatório"
+						value="#{usuarioBean.usuario.senhaSCriptografia}" feedback="true"
+						promptLabel="Por favor, informe uma senha" weakLabel="Senha fraca"
+						goodLabel="Senha média" strongLabel="Senha forte"
+						match="confirmacaoSenha" />
+
+					<p:outputLabel value="Confirme a senha" for="confirmacaoSenha" />
+					<p:password id="confirmacaoSenha" required="true" size="25"
+						maxlength="16" />
+
+
+
+					<p:outputLabel for="tipo" value="Tipo:" />
+					<p:selectOneRadio id="tipo"
+						value="#{usuarioBean.usuario.tipoDeUsuario}" required="true"
+						requiredMessage="O campo 'Tipo' obrigatório">
+						<f:selectItem itemValue="ADMINISTRADOR" itemLabel="Administrador" />
+						<f:selectItem itemValue="USUARIO" itemLabel="Usuario" />
+					</p:selectOneRadio>
+
+
+
+				</h:panelGrid>
+
+
+				<h:panelGrid columns="2">
+					<p:commandButton value="Salvar"
+						update=":mensagem :formCadastro:painel :formListagem:tabela"
+						actionListener="#{usuarioBean.salvar}" />
+					<p:commandButton value="Fechar" oncomplete="PF('dialogo').hide();" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>

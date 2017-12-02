@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="/modelo/modelo.xhtml">
+
+	<ui:define name="conteudo">
+	<h:form id="formListagem" >
+			<p:panel header="Lista de ambientes Reservados" style="text-align:center">
+				<p:dataTable id="tabela" emptyMessage="Nenhum Ambiente Reservado"
+					paginator="true" value="#{listaReservaAmbienteBean.listaDeReserva}"
+					var="reserva">
+
+					<f:facet name="header" rendered="#{autenticarUsuarioBean.usuarioLogado.tipoDeUsuario !='USUARIO'}" >
+						<h:commandLink rendered="#{autenticarUsuarioBean.usuarioLogado.tipoDeUsuario != 'USUARIO'}">
+							<p:graphicImage library="imagens" name="pdf.png" width="24"
+								title="Relatório PDF" />
+							<p:dataExporter type="pdf" target="tabela" fileName="Lista de ambiente reservado"
+								encoding="ISO-8859-1" />
+						</h:commandLink>
+						<h:commandLink rendered="#{autenticarUsuarioBean.usuarioLogado.tipoDeUsuario != 'USUARIO'}">
+							<p:graphicImage library="imagens" name="excel.png" width="24"
+								title="Relatório EXCEL" />
+							<p:dataExporter type="xls" target="tabela" fileName="Lista de ambiente reservado"
+								encoding="ISO-8859-1" />
+						</h:commandLink>
+					</f:facet>
+					 
+					
+					<p:column headerText="Número" sortBy="#{reserva.ambiente.numero}"
+						filterBy="#{reserva.ambiente.numero}">
+						<h:outputText value="#{reserva.ambiente.numero}" />
+					</p:column>
+
+					<p:column headerText="Nome" sortBy="#{reserva.ambiente.nome}"
+						filterBy="#{reserva.ambiente.nome}">
+						<h:outputText value="#{reserva.ambiente.nome}" />
+					</p:column>
+
+					
+
+					<p:column headerText="Data" sortBy="#{reserva.data}"
+						filterBy="#{reserva.data}">
+						<h:outputText value="#{reserva.data}">
+							<f:convertDateTime timeZone="GMT-03:00" pattern="dd/MM/yyyy - HH:mm:ss" locale="pt_BR"/>
+						</h:outputText>
+					</p:column>
+					
+					 <p:column headerText="Usuario"
+						sortBy="#{reserva.usuario.pessoa.nome}"
+						filterBy="#{reserva.usuario.pessoa.nome}">
+						<h:outputText value="#{reserva.usuario.pessoa.nome}" />
+					</p:column>
+					
+					 
+
+					<p:column headerText="Devolver chave" exportable="false" rendered="#{autenticarUsuarioBean.usuarioLogado.tipoDeUsuario !='USUARIO'}">
+						<p:commandButton icon="ui-icon-arrowrefresh-1-n" title="devolver chave"
+						  
+						  actionListener="#{listaReservaAmbienteBean.excluirReserva}" update=":mensagem :formListagem:tabela">
+							
+							<p:confirm header="Confirmação"
+								message="Deseja devolver a chave ?" icon="ui-icon-alert" />
+							<f:attribute name="devolverAmbiente" value="#{reserva}" />
+						 
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+		
+		 
+		<p:confirmDialog global="true">
+				<p:commandButton value="Sim" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Não" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+ 
+			
+		</p:confirmDialog>
+		
+			</p:panel>
+		</h:form>
+	</ui:define>
+</ui:composition>

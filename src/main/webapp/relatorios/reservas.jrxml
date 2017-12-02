@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
+<!-- 2016-11-28T12:22:38 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reservas" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="383077f5-c254-455e-82d1-e44ac8c17004">
+	<property name="com.jaspersoft.studio.data.sql.tables" value="ZGJfc2djLnRiX3Blc3NvYSBBUyAsMzMzLDE5OSxhNTMzYTRjYS0xNjkzLTRmNDctYjQyNy1hYzVi&#xA;ZmE0OWU1Yjg7ZGJfc2djLnRiX3Jlc2VydmEgQVMgLDE4LDE1LDRkNjkzODEyLWZjNzctNGMwZi05&#xA;YzEyLTlhYTg3ZWZhMGNjMjtkYl9zZ2MudGJfc2V0b3IgQVMgLDM0NSw4OSwzYmEzZTFkNi05YTE5&#xA;LTQyODgtYWQxZS1lNWNiZWUwMGFlNjE7ZGJfc2djLnRiX2FtYmllbnRlIEFTICwxOTQsMTEsZWUx&#xA;MzZkOTMtNWM3Mi00NjJlLTkyY2MtZTQ4ZjQ4MjM2NjFkO2RiX3NnYy50Yl91c3VhcmlvIEFTICwx&#xA;NjgsMTYxLGU1MTNmMDU0LWY0ZDAtNDdmNy04MWQ5LTQ4ODZjYmM1NTczYzs="/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="312"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="676"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="db_sgc"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT db_sgc.tb_reserva.codigo,
+	db_sgc.tb_reserva.data,
+	db_sgc.tb_ambiente.nome,
+	db_sgc.tb_ambiente.numero,
+	db_sgc.tb_usuario.cpf,
+	db_sgc.tb_setor.nome,
+	db_sgc.tb_pessoa.nome,
+	db_sgc.tb_pessoa.telefone,
+	db_sgc.tb_usuario.`tipoDeUsuario`
+FROM db_sgc.tb_reserva
+	INNER JOIN db_sgc.tb_ambiente ON 
+	 db_sgc.tb_reserva.ambiente_id = db_sgc.tb_ambiente.codigo 
+	 AND db_sgc.tb_reserva.ambiente_id = db_sgc.tb_ambiente.codigo 
+	INNER JOIN db_sgc.tb_usuario ON 
+	 db_sgc.tb_reserva.codigo_usuario = db_sgc.tb_usuario.codigo 
+	 AND db_sgc.tb_reserva.codigo_usuario = db_sgc.tb_usuario.codigo 
+	INNER JOIN db_sgc.tb_setor ON 
+	 db_sgc.tb_ambiente.codigo_setor = db_sgc.tb_setor.codigo 
+	INNER JOIN db_sgc.tb_pessoa ON 
+	 db_sgc.tb_usuario.codigo_pessoa = db_sgc.tb_pessoa.codigo]]>
+	</queryString>
+	<field name="codigo" class="java.lang.Long"/>
+	<field name="data" class="java.sql.Timestamp"/>
+	<field name="nome" class="java.lang.String"/>
+	<field name="numero" class="java.lang.String"/>
+	<field name="cpf" class="java.lang.String"/>
+	<field name="COLUMN_6" class="java.lang.String"/>
+	<field name="COLUMN_7" class="java.lang.String"/>
+	<field name="telefone" class="java.lang.String"/>
+	<field name="tipoDeUsuario" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement x="80" y="0" width="400" height="79" uuid="91d1713c-677f-407d-aa78-af254e532151"/>
+				<imageExpression><![CDATA["../../resources/imagens/principal.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="49" splitType="Stretch">
+			<staticText>
+				<reportElement x="80" y="19" width="400" height="30" uuid="dfe55cc7-d675-4edc-8108-5920ed12b998"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[RELATÓRIO DE RESERVAS ]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement x="-10" y="0" width="80" height="30" uuid="a6e7c979-c271-457f-bc95-9dfa134ad45c"/>
+				<textElement>
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[CÓDIGO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="0" width="100" height="30" uuid="d40fdc3b-540f-4e0c-b6f4-6e5fc1cdd1e5"/>
+				<textElement>
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[DATA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="130" y="0" width="100" height="30" uuid="fc605729-cef6-465c-a566-1746e4269e2a"/>
+				<textElement>
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[NOME]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="220" y="0" width="100" height="30" uuid="e95c1cc1-4bf7-4f81-966f-eec00f742554"/>
+				<textElement>
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[NÚMERO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="280" y="0" width="100" height="30" uuid="c120db82-df3f-460f-90f4-5e865921c828"/>
+				<textElement>
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[SETOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="380" y="0" width="100" height="30" uuid="256823ba-87ea-4a6e-9ea0-cf602f98b0d6"/>
+				<textElement>
+					<font size="10" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[NOME]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="480" y="0" width="80" height="30" uuid="04153e60-813c-47d9-b124-b0bb856a6338"/>
+				<textElement>
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[USUÁRIO]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="30" splitType="Stretch">
+			<textField>
+				<reportElement x="-10" y="0" width="80" height="30" uuid="bf1638a2-8a32-4e49-918f-9d2b816f3e5d"/>
+				<textFieldExpression><![CDATA[$F{codigo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="40" y="0" width="100" height="30" uuid="712ebe3a-bfa7-4161-bb23-9092bedde766"/>
+				<textFieldExpression><![CDATA[$F{data}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="130" y="0" width="100" height="30" uuid="e2b0381c-9fae-48ad-a658-be920a9acbd6"/>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="220" y="0" width="100" height="30" uuid="f181c2f6-eea7-4bd1-b380-a1a7473caee7"/>
+				<textFieldExpression><![CDATA[$F{numero}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="280" y="0" width="100" height="30" uuid="1751bca7-37c6-4731-b689-6e990a2d0d98"/>
+				<textFieldExpression><![CDATA[$F{COLUMN_6}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="380" y="0" width="100" height="30" uuid="e3b44ef0-919e-4bb4-8266-fd8409178b2e"/>
+				<textFieldExpression><![CDATA[$F{COLUMN_7}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="480" y="0" width="100" height="30" uuid="e83e206a-5a30-470e-b04f-fcd551de683a"/>
+				<textFieldExpression><![CDATA[$F{tipoDeUsuario}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="50">
+			<staticText>
+				<reportElement x="80" y="9" width="400" height="41" uuid="93bb567a-5d64-4c6d-ad1b-0ffe4915b66c"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SISTEMA DE GERENCIAMENTO DE CHAVES - SGC]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+</jasperReport>

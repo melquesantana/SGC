@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="/modelo/modelo.xhtml">
+
+	<ui:define name="conteudo">
+		<h:form id="formListagem">
+			<p:panel header="Reservas de Ambientes" style="text-align:center">
+				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
+					paginator="true" value="#{reservaAmbienteBean.ambienteSemReserva}"
+					var="reserva" rows="5"
+					selection="#{reservaAmbienteBean.ambienteSelecionado}"
+					selectionMode="single" rowKey="#{reserva.codigo}">
+
+
+					<p:ajax event="rowSelect"
+						listener="#{reservaAmbienteBean.carregarAmbiente}"
+						update=":mensagem :formListagem:tabela"/>
+					<!--  	oncomplete="PF('dlReservaData').show()" -->
+					
+
+					<f:facet name="header" >
+						<h:commandLink rendered="#{autenticarUsuarioBean.usuarioLogado.tipoDeUsuario != 'USUARIO'}">
+							<p:graphicImage library="imagens" name="pdf.png" width="24"
+								title="Relatório PDF" />
+							<p:dataExporter type="pdf" target="tabela" fileName="Reserva de ambiente"
+								encoding="ISO-8859-1" />
+						</h:commandLink>
+						<h:commandLink rendered="#{autenticarUsuarioBean.usuarioLogado.tipoDeUsuario != 'USUARIO'}">
+							<p:graphicImage library="imagens" name="excel.png" width="24"
+								title="Relatório EXCEL" />
+							<p:dataExporter type="xls" target="tabela" fileName="reserva de Ambiente"
+								encoding="ISO-8859-1" />
+						</h:commandLink>
+					</f:facet>
+
+					<p:column headerText="codigo" sortBy="#{reserva.codigo}"
+						filterBy="#{reserva.codigo}">
+						<h:outputText value="#{reserva.codigo}" />
+					</p:column>
+					<p:column headerText="Número" sortBy="#{reserva.numero}"
+						filterBy="#{reserva.numero}">
+						<h:outputText value="#{reserva.numero}" />
+					</p:column>
+					
+
+					<p:column headerText="Nome" sortBy="#{reserva.nome}"
+						filterBy="#{reserva.nome}">
+						<h:outputText value="#{reserva.nome}">
+						</h:outputText>
+
+					</p:column>
+					<p:column headerText="Setor" sortBy="#{reserva.setor.nome}"
+						filterBy="#{reserva.setor.nome}">
+						<h:outputText value="#{reserva.setor.nome}" />
+					</p:column>
+
+
+
+
+					
+				</p:dataTable>
+			</p:panel>
+
+
+		</h:form>
+		<!-- <p:dialog header="Reserva - Data" widgetVar="dlReservaData" 
+				closable="false" draggable="false" resizable="false" modal="true">
+			<h:form id="formExcluirReserva" > 
+				<h:panelGrid id="painel" columns="2">
+				<p:outputLabel value="Informe a Data da Reserva"/>
+				 <p:calendar value="#{reservaSalaBean.dataDaReserva}" />
+					<p:commandButton value="Reservar"
+						actionListener="#{reservaSalaBean.carregarSala}"
+						update=":mensagem :formListagem:tabela" 
+						oncomplete="PF('dlReservaExclusao').hide();"/>					
+					<p:commandButton value="Cancelar" oncomplete="PF('dlReservaData').hide();"/>					 
+				</h:panelGrid>			
+			</h:form>
+		</p:dialog>
+		-->
+	</ui:define>
+</ui:composition>

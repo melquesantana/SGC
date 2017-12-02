@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="/modelo/modelo.xhtml">
+ 
+ <ui:define name="conteudo">
+	<h:form id="formListagem">
+		<p:panel header="Setor - Listagem" >
+			<p:dataTable id="tabela" emptyMessage="Nenhum setor encontrado!" 
+				paginator="true" value="#{setorBean.setores}" var="setor" rows="5"  style="text-align: center">
+				
+				<f:facet name="header">
+            <h:commandLink>
+                <p:graphicImage library="imagens" name="pdf.png" width="24" title="Relatório PDF" />
+                <p:dataExporter type="pdf" target="tabela" fileName="setor" encoding="ISO-8859-1" />
+            </h:commandLink>
+            <h:commandLink>
+                <p:graphicImage  library="imagens" name="excel.png" width="24" title="Relatório EXCEL"/>
+                <p:dataExporter type="xls" target="tabela" fileName="setor" encoding="ISO-8859-1" />
+            </h:commandLink>
+            </f:facet>
+            
+				<f:facet name="footer">
+					<p:commandButton value="Cadastrar Setor" title="Novo Setor" oncomplete="PF('dialogo').show();"
+						actionListener="#{setorBean.novo}"
+						 update=":mensagem :formCadastro:painel" >
+						<f:actionListener
+							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+					</p:commandButton>
+				</f:facet>
+				
+				
+				<p:column headerText="Nome" sortBy="#{setor.nome}"
+					filterBy="#{setor.nome}">
+					<h:outputText value="#{setor.nome}" />
+				</p:column>				 
+				<p:column headerText="Opções" exportable="false">
+					<p:commandButton icon="ui-icon-trash" title="Excluir"
+						actionListener="#{setorBean.excluir}"
+						update=":mensagem :formListagem:tabela">
+						<p:confirm header="Confirmação" message="Deseja excluir o setor?"
+							icon="ui-icon-alert" />
+						<f:attribute name="setorSelecionado" value="#{setor}" />
+					</p:commandButton>
+					<p:commandButton icon="ui-icon-pencil"  
+						actionListener="#{setorBean.editar}" title="Editar"
+						update=":mensagem :formCadastro:painel"
+						oncomplete="PF('dialogo').show();">
+						<f:attribute name="setorSelecionado" value="#{setor}" />
+						<f:actionListener
+							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+			<p:confirmDialog global="true">
+				<p:commandButton value="Sim" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Não" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+		</p:panel>
+	</h:form>
+	<p:dialog header="Setor - Cadastro" widgetVar="dialogo"
+		draggable="false" resizable="false" modal="true" closable="false">
+		<h:form id="formCadastro">
+			<p:panelGrid id="painel" columns="2" layout="grid">
+				<p:outputLabel  for="nome" value="Nome do Setor:" />
+				<p:inputText id="nome" maxlength="30" size="40" required="true"
+					value="#{setorBean.setor.nome }" 
+					requiredMessage=" o campo 'setor' é Obrigatorio" converter="upperCaseConverter"
+					converterMessage="Informe um valor válido para o campo 'Identificação'"
+					validatorMessage="Informe um valor de no maximo  30 caracteres para o campo 'Nome do setor'" >
+					 
+					</p:inputText>				
+			</p:panelGrid>
+			<h:panelGrid columns="2">
+				<p:commandButton value="Salvar" title="Salvar"
+					actionListener="#{setorBean.salvar}"
+					update=":mensagem :formCadastro:painel :formListagem:tabela" />
+				<p:commandButton value="Fechar" oncomplete="PF('dialogo').hide();" />
+			</h:panelGrid>
+		</h:form>
+	</p:dialog>
+ 
+</ui:define>
+</ui:composition>

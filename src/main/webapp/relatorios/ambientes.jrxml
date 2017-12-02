@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
+<!-- 2016-11-28T11:59:01 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ambientes" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="fcb2b941-121d-42c6-86a2-244e27686dfd">
+	<property name="com.jaspersoft.studio.data.sql.tables" value="ZGJfc2djLnRiX3NldG9yIEFTICwyMzUsODEsNWZhYWFkYTMtMDA0Yy00ZGViLThhZjktNThmMzgw&#xA;MGU1OGIxO2RiX3NnYy50Yl9hbWJpZW50ZSBBUyAsMjUsNjgsNGNkMzRmZWMtNTc0Ni00NTMxLWJj&#xA;YWItZjU3N2U5ZjIxMGQ4Ow=="/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT db_sgc.tb_ambiente.codigo,
+	db_sgc.tb_ambiente.nome,
+	db_sgc.tb_ambiente.numero,
+	db_sgc.tb_ambiente.codigo_setor,
+	db_sgc.tb_setor.codigo,
+	db_sgc.tb_setor.nome
+FROM db_sgc.tb_ambiente
+	INNER JOIN db_sgc.tb_setor ON 
+	 db_sgc.tb_ambiente.codigo_setor = db_sgc.tb_setor.codigo]]>
+	</queryString>
+	<field name="codigo" class="java.lang.Long"/>
+	<field name="nome" class="java.lang.String"/>
+	<field name="numero" class="java.lang.String"/>
+	<field name="codigo_setor" class="java.lang.Long"/>
+	<field name="COLUMN_5" class="java.lang.Long"/>
+	<field name="COLUMN_6" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement x="80" y="0" width="400" height="77" uuid="5c20fb1f-dc01-4873-8120-312c7c6058ba"/>
+				<imageExpression><![CDATA["../../resources/imagens/principal.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="38" splitType="Stretch">
+			<staticText>
+				<reportElement x="80" y="8" width="400" height="30" uuid="9f6dbc98-e504-4196-b7fe-d5831164d6fa"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[RELATÓRIOS DE AMBIENTES]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="30" uuid="e9fa8a64-6436-498f-9781-032cced9bbab"/>
+				<textElement textAlignment="Left">
+					<font size="14" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[CÓDIGO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="140" y="0" width="100" height="30" uuid="759be90e-201a-49b9-b565-46c65990a5c4"/>
+				<textElement>
+					<font size="14" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[NOME]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="320" y="0" width="100" height="30" uuid="e125c2ba-0a62-45a1-9a5c-a4be9ea1005f"/>
+				<textElement>
+					<font size="14" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[NÚMERO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="480" y="0" width="100" height="30" uuid="0e1782af-cb07-408e-b1b7-be5d54d106bb"/>
+				<textElement>
+					<font size="14" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[SETOR]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="30" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="100" height="30" uuid="052372d6-db23-4f1b-a254-17bef08355ed"/>
+				<textElement verticalAlignment="Top">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{codigo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="140" y="0" width="100" height="30" uuid="d5c493b7-2bfc-4718-bc80-45d398fd9aea"/>
+				<textElement verticalAlignment="Top">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="320" y="0" width="100" height="30" uuid="4e210a93-5e06-47f4-bda7-82cd04654ada"/>
+				<textElement verticalAlignment="Top">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numero}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="475" y="0" width="100" height="30" uuid="fe946027-541e-4841-b45f-ce9f13905cb4"/>
+				<textElement verticalAlignment="Top">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COLUMN_6}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="44">
+			<staticText>
+				<reportElement x="80" y="14" width="400" height="30" uuid="e3a8ad32-3a47-4d97-ac75-bf3c6a45b882"/>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SISTEMA DE GERENCIAMENTO DE CHAVES]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>
